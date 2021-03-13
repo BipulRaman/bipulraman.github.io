@@ -1,0 +1,2 @@
+(self.webpackChunkbipul_raman=self.webpackChunkbipul_raman||[]).push([[250],{4684:function(e,l,n){"use strict";n.r(l),n.d(l,{default:function(){return c}});var t=n(7294),u=n(1145),a=n(3522),r=n(5414);n(9616);function c(e){var l=e.id;return console.log(l),t.createElement(u.Z,null,t.createElement(a.Z,{blogId:l}),t.createElement(r.q,null,t.createElement("title",null,"Blogs | Bipul Raman")))}}}]);
+//# sourceMappingURL=component---src-pages-blogbyid-js-aaf99a8c15fc8d34e014.js.map
