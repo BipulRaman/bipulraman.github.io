@@ -1,0 +1,2 @@
+(self.webpackChunkbipul_raman=self.webpackChunkbipul_raman||[]).push([[296],{1666:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return a}});var l=t(7294),r=t(6992),u=t(2597),c=t(169),i=t(1587);function a(){console.log("Blogs");return l.createElement(r.Z,null,l.createElement(u.Z,{blogId:"20210312064310"}),l.createElement(c.Z,{Title:i.xG.Title,Description:i.xG.Description}))}}}]);
+//# sourceMappingURL=component---src-pages-blogs-js-b37b0bc6f3ac5de03926.js.map
