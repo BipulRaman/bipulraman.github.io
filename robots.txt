@@ -1,3 +1,4 @@
 User-agent: *
-
-Sitemap: https://web.bipul.in/sitemap.xml
+Disallow: /blog/*
+Disallow: /blogs
+Sitemap: https://www.bipul.in/sitemap.xml
