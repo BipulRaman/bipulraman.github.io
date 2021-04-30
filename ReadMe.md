@@ -4,11 +4,11 @@ The Official Website of Bipul Raman
 
 Link: https://www.bipul.in
 
-## Branches
+## Deployment
 
-|branch|built from|deployed to|
+|repository|branch|deployed to|
 |---|---|---|
-|`master`|`BipulRaman/www.bipul.in:main`|https://www.bipul.in|
+|`BipulRaman/www.bipul.in`|`main`|https://www.bipul.in|
 
 ## CI-CD Pipeline Status
 
