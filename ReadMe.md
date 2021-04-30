@@ -4,11 +4,20 @@ The Official Website of Bipul Raman
 
 Link: https://www.bipul.in
 
-## Branches
+## Deployment
 
-|branch|built from|deployed to|
+|repository|branch|deployed to|
 |---|---|---|
-|`master`|`BipulRaman/www.bipul.in:main`|https://www.bipul.in|
+|`BipulRaman/www.bipul.in`|`main`|https://www.bipul.in|
+
+## CI-CD Pipeline Status
+
+|Component|Status|
+|---|---|
+|`Authenticated API`|[![www.bipul.in API](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.API.yml/badge.svg)](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.API.yml)|
+|`Public API`|[![www.bipul.in Public API](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.PublicAPI.yml/badge.svg)](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.PublicAPI.yml)|
+|`Public Web - GatsBy`|[![www.bipul.in Web](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.Web.Gatsby.yml/badge.svg)](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.Web.Gatsby.yml)|
+|`Public Web - NextJs`|[![www.bipul.in Web](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.Web.NextJs.yml/badge.svg)](https://github.com/BipulRaman/www.bipul.in/actions/workflows/Deploy_Bipul.App.Web.NextJs.yml)|
 
 ## Defects / New feature request
 You can raise defects or request new features here: https://github.com/BipulRaman/bipulraman.github.io/issues
