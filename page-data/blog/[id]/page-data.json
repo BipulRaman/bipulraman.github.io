@@ -1,1 +1,6 @@
-{"componentChunkName":"component---src-pages-blog-[id]-js","path":"/blog/[id]/","result":{"pageContext":{}},"staticQueryHashes":[],"matchPath":"/blog/:id"}
+{
+    "componentChunkName": "component---src-pages-blog-[id]-js",
+    "path": "/blog/[id]/",
+    "result": {"pageContext":{"matchPath":"/blog/:id"}},
+    "staticQueryHashes": [],
+    "matchPath": "/blog/:id"}
