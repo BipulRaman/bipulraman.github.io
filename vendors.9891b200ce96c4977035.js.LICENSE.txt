@@ -68,7 +68,15 @@ PERFORMANCE OF THIS SOFTWARE.
  */
 
 /**
- * @remix-run/router v1.1.0
+ * @mui/material v5.15.16
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @remix-run/router v1.16.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -79,7 +87,7 @@ PERFORMANCE OF THIS SOFTWARE.
  */
 
 /**
- * React Router DOM v6.5.0
+ * React Router DOM v6.23.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -90,7 +98,7 @@ PERFORMANCE OF THIS SOFTWARE.
  */
 
 /**
- * React Router v6.5.0
+ * React Router v6.23.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -101,12 +109,6 @@ PERFORMANCE OF THIS SOFTWARE.
  */
 
 /** @license MUI v5.0.0-alpha.112
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license MUI v5.11.0
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
