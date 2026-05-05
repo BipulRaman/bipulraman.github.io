@@ -524,6 +524,8 @@
       const b = el('button', {
         class: 'lx__dock__btn',
         'data-tip': app.title,
+        title: app.title,
+        'aria-label': app.title,
         style: { '--c1': app.c1, '--c2': app.c2 },
         onclick: (e) => openLxWindow(id, e),
         html: appIconHTML(app, 22),
@@ -730,6 +732,8 @@
       dockEl = el('button', {
         class: 'lx__dock__btn is-running',
         'data-tip': app.title,
+        title: app.title,
+        'aria-label': app.title,
         style: { '--c1': app.c1, '--c2': app.c2 },
         onclick: () => openLxWindow(id),
         html: appIconHTML(app, 22),
