@@ -93,14 +93,14 @@
         runs on the cloud — the kind of services that quietly power things
         millions of people use every day.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     host.appendChild(section('Quick facts',
       el('div', { class: 'chips' },
         chip('📍 India'),
         chip('💼 Microsoft'),
-        chip('🛠️ 10+ years engineering'),
+        chip('🛠️ 12+ years engineering'),
         chip('🌐 Cloud + AI'),
         chip('🎤 Speaker'),
         chip('🟢 Open to collaborate'),
@@ -120,7 +120,7 @@
 
     host.appendChild(section('In numbers',
       el('div', { class: 'stats' },
-        stat('10+', 'Years building'),
+        stat('12+', 'Years building'),
         stat('85+', 'GitHub repos'),
         stat('1,100+', 'Commits / yr'),
         stat('5,364m', 'Highest trek'),
@@ -139,7 +139,7 @@
         <p>A real timeline — schools, jobs, awards and a few proud
         moments — pulled straight from my own milestone log.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     // Real milestones from bipul.in/timeline (most recent first)
@@ -234,7 +234,7 @@
         small problem I had myself — and they happen to be useful for
         others too.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     const projects = [
@@ -285,7 +285,7 @@
         <p>What I reach for when I sit down to build something. The list is
         long but here are the headlines.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     const skills = [
@@ -329,7 +329,7 @@
         <p>I love sharing what I learn. Over the years I've given guest
         lectures at universities, colleges and schools across India.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     host.appendChild(section('Topics I cover', el('div', { class: 'topics' },
@@ -365,7 +365,7 @@
         <p>I love the outdoors. Mountains, in particular, have a way of
         putting everything into perspective.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     host.appendChild(section('Highlights', el('div', { class: 'advs' },
@@ -395,7 +395,7 @@
         <p>Open to interesting projects, guest lectures, mentorship, and
         good conversations. Pick whichever channel feels easiest.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     host.appendChild(section('Find me online', el('div', { class: 'btnrow' },
@@ -422,7 +422,7 @@
         <h1>What I'm up to right now 📡</h1>
         <p>A live snapshot of the things on my desk this month.</p>
       </div>
-      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onerror="this.remove()"/><span>BR</span></div></div>
+      <div class="page__hero__avatar"><div><img class="page__hero__avatar__img" src="assets/bipul.webp" alt="Bipul Raman" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()"/><span>BR</span></div></div>
     ` }));
 
     host.appendChild(section('Currently', el('div', { class: 'prose', html: `
@@ -468,11 +468,10 @@
   }
 
   /* =========================================================
-   * THEME (single dark theme — ensure attribute is set)
+   * THEME
+   * Site is hard-locked to a single dark theme — styles/main.css
+   * defines all tokens directly on :root. No JS toggle needed.
    * ========================================================= */
-  function loadTheme() {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
   function toast(text) {
     document.querySelectorAll('.toast').forEach((t) => t.remove());
     const t = el('div', { class: 'toast' }, text);
@@ -1168,7 +1167,6 @@
    * INIT
    * ========================================================= */
   function init() {
-    loadTheme();
     buildLinux();
     buildAndroid();
 
