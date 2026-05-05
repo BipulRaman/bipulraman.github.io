@@ -299,15 +299,21 @@
       { name: 'Developer tooling', pct: 88, lvl: 'Strong' },
     ];
     const wrap = el('div', { class: 'skills' });
+    const fills = [];
     for (const s of skills) {
       const fill = el('div', { class: 'skill__fill' });
+      fills.push({ fill, pct: s.pct });
       wrap.appendChild(el('div', { class: 'skill' },
         el('div', {}, s.name),
         el('div', { class: 'skill__bar' }, fill),
         el('div', { class: 'skill__lvl' }, s.lvl),
       ));
-      requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = s.pct + '%'; }));
     }
+    // Batch all writes into a single rAF after the next layout pass.
+    // Avoids one forced-reflow per skill row (Lighthouse: forced reflow).
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      for (const { fill, pct } of fills) fill.style.width = pct + '%';
+    }));
     host.appendChild(section('Where I shine', wrap));
 
     host.appendChild(section('Areas I work in', el('div', { class: 'chips' },
@@ -486,13 +492,12 @@
   function fmtTime(d, withDate) {
     let h = d.getHours();
     const m = d.getMinutes().toString().padStart(2, '0');
-    const s = d.getSeconds().toString().padStart(2, '0');
     const ampm = h >= 12 ? 'PM' : 'AM';
     h = h % 12; if (h === 0) h = 12;
-    if (!withDate) return `${h}:${m}:${s} ${ampm}`;
+    if (!withDate) return `${h}:${m} ${ampm}`;
     const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
     const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
-    return `${wd} ${mo} ${d.getDate()}\u2003\u2003${h}:${m}:${s} ${ampm}`;
+    return `${wd} ${mo} ${d.getDate()}\u2003\u2003${h}:${m} ${ampm}`;
   }
   function fmtDateLong(d) {
     return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -561,6 +566,8 @@
     // Theme is fixed (single dark theme)
 
     // ---- System tray popover (GNOME-style social menu) ----
+    // Built lazily on first tray click — it's invisible at start and adds
+    // ~30 DOM nodes we don't need to pay for upfront.
     const SOCIAL_LINKS = [
       { id: 'github',   title: 'GitHub',   url: 'https://github.com/BipulRaman',         color: '#24292E' },
       { id: 'x',        title: 'X',        url: 'https://x.com/BipulRaman',              color: '#000000' },
@@ -568,28 +575,36 @@
       { id: 'email',    title: 'Email',    url: 'mailto:hello@bipul.in',                 color: '#E95420' },
     ];
 
-    const trayMenu = el('div', { class: 'lx__traymenu', id: 'lxTrayMenu', hidden: '' },
-      el('div', { class: 'lx__traymenu__title' }, 'Find me on'),
-      el('div', { class: 'lx__traymenu__grid' },
-        ...SOCIAL_LINKS.map((s) => el('a', {
-          class: 'lx__traymenu__tile',
-          href: s.url,
-          target: s.id === 'email' ? null : '_blank',
-          rel: s.id === 'email' ? null : 'noopener noreferrer',
-          'aria-label': s.title,
-          style: { '--c': s.color },
-          onclick: () => closeTrayMenu(),
-        },
-          el('span', { class: 'lx__traymenu__tile__icn', html: svg(s.id, 22) }),
-          el('span', { class: 'lx__traymenu__tile__lbl' }, s.title),
-        )),
-      ),
-    );
-    $('.lx__panel').appendChild(trayMenu);
+    let trayMenu = null;
+    const buildTrayMenu = () => {
+      if (trayMenu) return trayMenu;
+      trayMenu = el('div', { class: 'lx__traymenu', id: 'lxTrayMenu', hidden: '' },
+        el('div', { class: 'lx__traymenu__title' }, 'Find me on'),
+        el('div', { class: 'lx__traymenu__grid' },
+          ...SOCIAL_LINKS.map((s) => el('a', {
+            class: 'lx__traymenu__tile',
+            href: s.url,
+            target: s.id === 'email' ? null : '_blank',
+            rel: s.id === 'email' ? null : 'noopener noreferrer',
+            'aria-label': s.title,
+            style: { '--c': s.color },
+            onclick: () => closeTrayMenu(),
+          },
+            el('span', { class: 'lx__traymenu__tile__icn', html: svg(s.id, 22) }),
+            el('span', { class: 'lx__traymenu__tile__lbl' }, s.title),
+          )),
+        ),
+      );
+      $('.lx__panel').appendChild(trayMenu);
+      return trayMenu;
+    };
 
-    const closeTrayMenu = () => trayMenu.setAttribute('hidden', '');
-    const openTrayMenu  = () => { trayMenu.removeAttribute('hidden'); };
-    const toggleTrayMenu = () => trayMenu.hasAttribute('hidden') ? openTrayMenu() : closeTrayMenu();
+    const closeTrayMenu = () => { if (trayMenu) trayMenu.setAttribute('hidden', ''); };
+    const openTrayMenu  = () => { buildTrayMenu().removeAttribute('hidden'); };
+    const toggleTrayMenu = () => {
+      if (!trayMenu || trayMenu.hasAttribute('hidden')) openTrayMenu();
+      else closeTrayMenu();
+    };
 
     // Make all tray buttons/icons open the popover
     $('#lxTray').addEventListener('click', (e) => {
@@ -599,20 +614,26 @@
       toggleTrayMenu();
     });
     document.addEventListener('click', (e) => {
-      if (trayMenu.hasAttribute('hidden')) return;
+      if (!trayMenu || trayMenu.hasAttribute('hidden')) return;
       if (!trayMenu.contains(e.target) && !e.target.closest('#lxTray')) closeTrayMenu();
     });
 
-    // Clock
-    const tickClock = () => { $('#lxClock').textContent = fmtTime(new Date(), true); };
+    // Clock — minute precision only; aligned to the next minute boundary
+    // so the display flips exactly when the minute changes.
+    const clockEl = $('#lxClock');
+    const tickClock = () => { clockEl.textContent = fmtTime(new Date(), true); };
     tickClock();
-    setInterval(tickClock, 1000);
+    const msToNextMin = () => 60000 - (Date.now() % 60000);
+    setTimeout(function loop() {
+      tickClock();
+      setTimeout(loop, msToNextMin());
+    }, msToNextMin());
 
     // Esc closes overview
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (!$('#lxOverview').hasAttribute('hidden')) toggleOverview(false);
-        if (!trayMenu.hasAttribute('hidden')) closeTrayMenu();
+        if (trayMenu && !trayMenu.hasAttribute('hidden')) closeTrayMenu();
       }
     });
   }
@@ -858,15 +879,23 @@
     }
 
     // Clocks (status bar + shade only — no big home clock anymore)
+    // Minute precision only; align ticks to the next minute boundary.
+    const andTimeEl      = $('#andTime');
+    const andShadeTimeEl = $('#andShadeTime');
+    const andShadeDateEl = $('#andShadeDate');
     const tickAnd = () => {
       const d = new Date();
-      $('#andTime').textContent = fmtTime(d);
-      $('#andShadeTime').textContent = fmtTime(d);
-      const dateLong = fmtDateLong(d);
-      $('#andShadeDate').textContent = dateLong;
+      const t = fmtTime(d);
+      andTimeEl.textContent      = t;
+      andShadeTimeEl.textContent = t;
+      andShadeDateEl.textContent = fmtDateLong(d);
     };
     tickAnd();
-    setInterval(tickAnd, 1000);
+    const msToNextMin = () => 60000 - (Date.now() % 60000);
+    setTimeout(function loop() {
+      tickAnd();
+      setTimeout(loop, msToNextMin());
+    }, msToNextMin());
 
     // App bar
     $('#andAppBack').addEventListener('click', closeAndApp);
@@ -1170,19 +1199,43 @@
   /* =========================================================
    * INIT
    * ========================================================= */
+  // Track which layouts have already been built so we never build twice
+  // (e.g. when the user resizes across the mobile breakpoint).
+  const built = { lx: false, and: false };
+
+  function buildVisibleLayout() {
+    if (isMobile()) {
+      if (!built.and) { buildAndroid(); built.and = true; }
+    } else {
+      if (!built.lx)  { buildLinux();   built.lx  = true; }
+    }
+  }
+
   function init() {
-    buildLinux();
-    buildAndroid();
+    // Only build the layout that's actually visible right now. Building both
+    // doubles DOM size and main-thread work for no visible benefit.
+    buildVisibleLayout();
+
+    // If the viewport later crosses the breakpoint, build the other side
+    // just-in-time. Use matchMedia change listener instead of resize +
+    // throttling — fires once per breakpoint crossing.
+    const mq = window.matchMedia('(max-width: 768px)');
+    const onMQ = () => buildVisibleLayout();
+    if (mq.addEventListener) mq.addEventListener('change', onMQ);
+    else if (mq.addListener) mq.addListener(onMQ); // Safari < 14
 
     // Hash deep-linking — open the matching window/app on load AND when the
     // hash changes later (address bar edits, internal '#' links, back/forward).
     const routeFromHash = () => {
       const hash = location.hash.replace('#', '');
       if (!hash || !APPS[hash]) return;
+      buildVisibleLayout();
       if (isMobile()) openAndApp(hash);
       else openLxWindow(hash);
     };
-    setTimeout(routeFromHash, 100);
+    // Defer to idle so it doesn't extend the initial main-thread task.
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+    idle(routeFromHash);
     window.addEventListener('hashchange', routeFromHash);
   }
 
