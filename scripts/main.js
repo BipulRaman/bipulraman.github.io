@@ -1216,6 +1216,19 @@
     // doubles DOM size and main-thread work for no visible benefit.
     buildVisibleLayout();
 
+    // Hide the inline boot splash now that the UI is in place. We wait one
+    // rAF so the just-built DOM is committed to the screen first, otherwise
+    // there's a sub-frame flash of empty wallpaper between splash removal
+    // and first real paint.
+    requestAnimationFrame(() => {
+      const boot = document.getElementById('boot');
+      if (!boot) return;
+      boot.classList.add('is-hiding');
+      // Match the CSS transition (.35s) before removing from the DOM so it
+      // never blocks pointer events or screen readers.
+      setTimeout(() => boot.remove(), 400);
+    });
+
     // If the viewport later crosses the breakpoint, build the other side
     // just-in-time. Use matchMedia change listener instead of resize +
     // throttling — fires once per breakpoint crossing.
